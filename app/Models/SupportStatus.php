@@ -11,6 +11,9 @@ class SupportStatus extends Model
 
     protected $fillable = [
         'name',
-        'hex'
+        'is_custom',
+        'bg_color',
+        'text_color',
+        'color_name'
     ];
 }

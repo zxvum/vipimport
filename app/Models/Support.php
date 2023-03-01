@@ -18,10 +18,10 @@ class Support extends Model
     ];
 
     public function theme(){
-        return $this->belongsTo(SupportTheme::class, 'id', 'theme_id');
+        return $this->belongsTo(SupportTheme::class, 'theme_id', 'id');
     }
 
     public function status(){
-        return $this->belongsTo(SupportStatus::class, 'id', 'status_id');
+        return $this->belongsTo(SupportStatus::class, 'status_id', 'id');
     }
 }

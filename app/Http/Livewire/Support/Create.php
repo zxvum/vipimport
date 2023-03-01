@@ -51,6 +51,7 @@ class Create extends Component
         Support::create([
             'title' => $this->title,
             'theme_id' => $this->theme_id,
+            'status_id' => 1,
             'text' => $this->text,
             'media' => $fileDataJson
         ]);

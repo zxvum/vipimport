@@ -22,9 +22,9 @@ class SupportSeeder extends Seeder
         SupportTheme::create(['name' => 'Заказы/Товары']);
         SupportTheme::create(['name' => 'Другое']);
 
-        SupportStatus::create(['name' => 'Создан', 'hex' => '#ffab00']);
-        SupportStatus::create(['name' => 'В процессе', 'hex' => '#696cff']);
-        SupportStatus::create(['name' => 'Решен', 'hex' => '#71dd37']);
-        SupportStatus::create(['name' => 'Закрыт', 'hex' => '#ff3e1d']);
+        SupportStatus::create(['name' => 'Создан', 'color_name' => 'warning']);
+        SupportStatus::create(['name' => 'В процессе', 'color_name' => 'primary']);
+        SupportStatus::create(['name' => 'Решён', 'color_name' => 'success']);
+        SupportStatus::create(['name' => 'Закрыт', 'color_name' => 'danger']);
     }
 }

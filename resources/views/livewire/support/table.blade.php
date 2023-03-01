@@ -20,7 +20,7 @@
                             <th class="text-center">#</th>
                             <th class="text-center">Название</th>
                             <th class="text-center">Тема</th>
-                            <th class="text-center">Статус</th>
+                            <th>Статус</th>
                             <th class="text-center">Действия</th>
                         </tr>
                         </thead>
@@ -35,9 +35,10 @@
                                     <td class="text-center">{{ $support->id }}</td>
                                     <td class="text-center">{{ $support->title }}</td>
                                     <td class="text-center">{{ $support->theme->name }}</td>
-                                    <td class="text-center" style="color: {{ $support->status->hex }}">{{ $support->status->name }}</td>
+
+                                    <td><span @if($support->status->is_custom) class="badge me-1" style="color: {{ $support->status->text_color }} !important; background: {{ $support->status->bg_color }};" @else class="badge bg-label-{{ $support->status->color_name }} me-1" @endif>{{ $support->status->name }}</span></td>
                                     <td class="text-center">
-                                        <a href="#" class="btn btn-primary btn-sm"><i class="bx bx-show"></i></a>
+                                        <a href="{{ route('support.view', ['id' => $support->id]) }}" class="btn btn-primary btn-sm"><i class="bx bx-show"></i></a>
                                         <a href="#" type="button" class="btn btn-success btn-sm"><i class="bx bx-edit"></i></a>
                                         <a href="#" onclick="confirm('Вы действительно хотите удалить заказ?')" class="btn btn-danger btn-sm"><i class="bx bx-trash"></i></a>
                                     </td>

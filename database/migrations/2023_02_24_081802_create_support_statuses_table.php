@@ -16,7 +16,10 @@ return new class extends Migration
         Schema::create('support_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('hex')->default('#000');
+            $table->boolean('is_custom')->default('0');
+            $table->string('bg_color')->nullable();
+            $table->string('text_color')->nullable();
+            $table->string('color_name')->nullable();
             $table->timestamps();
         });
     }
