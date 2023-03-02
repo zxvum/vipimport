@@ -59,6 +59,10 @@ return new class extends Migration
             $table->foreign('theme_id')->references('id')->on('support_themes');
             $table->foreign('status_id')->references('id')->on('support_statuses');
         });
+
+        Schema::table('support_attachments', function (Blueprint $table) {
+            $table->foreign('support_id')->references('id')->on('supports');
+        });
     }
 
     /**

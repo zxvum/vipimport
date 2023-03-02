@@ -20,6 +20,11 @@
                         <div class="item__phone">Телефон: 89181243115</div>
                     </div>
                 </div>
+                <div class="d-flex">
+                    @foreach($support->attachments as $image)
+                        <img src="{{ asset('storage/'.$image->path) }}" alt="">
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

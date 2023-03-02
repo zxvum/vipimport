@@ -8,7 +8,7 @@
                     <h5 class="mb-0">Создание обращения</h5>
                 </div>
                 <div class="card-body">
-                    <form wire:submit.prevent="store" method="get">
+                    <form wire:submit.prevent="store" enctype="multipart/form-data" method="get">
                         <div class="mb-3">
                             <label class="form-label" for="title">Название</label>
                             <input wire:model="title" type="text" class="form-control" name="name" id="title" placeholder="Наименование вашего обращения" value="{{ old('title') }}" required>

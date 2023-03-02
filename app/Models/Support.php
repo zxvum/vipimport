@@ -13,8 +13,7 @@ class Support extends Model
         'title',
         'theme_id',
         'status_id',
-        'text',
-        'media'
+        'text'
     ];
 
     public function theme(){
@@ -23,5 +22,9 @@ class Support extends Model
 
     public function status(){
         return $this->belongsTo(SupportStatus::class, 'status_id', 'id');
+    }
+
+    public function attachments(){
+        return $this->hasMany(SupportAttachment::class, 'support_id', 'id');
     }
 }

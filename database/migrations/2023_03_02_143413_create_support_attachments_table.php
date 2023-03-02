@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('supports', function (Blueprint $table) {
+        Schema::create('support_attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->unsignedBigInteger('theme_id');
-            $table->unsignedBigInteger('status_id');
-            $table->text('text');
+            $table->unsignedBigInteger('support_id');
+            $table->string('filename');
+            $table->string('path');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supports');
+        Schema::dropIfExists('support_attachments');
     }
 };

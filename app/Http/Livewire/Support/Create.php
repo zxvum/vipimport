@@ -3,7 +3,10 @@
 namespace App\Http\Livewire\Support;
 
 use App\Models\Support;
+use App\Models\SupportAttachment;
 use App\Models\SupportTheme;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -14,7 +17,7 @@ class Create extends Component
     public $themes = [];
 
     public $title = '';
-    public $theme_id = 0;
+    public $theme_id = 1;
     public $text = '';
     public $files = [];
 
@@ -33,28 +36,28 @@ class Create extends Component
     public function store(){
         $this->validate();
 
-        $files = $this->files;
-        $fileDataArray = [];
+        $support = new Support();
+        $support->title = $this->title;
+        $support->theme_id = $this->theme_id;
+        $support->status_id = 1;
+        $support->text = $this->text;
+        $support->save();
 
-        foreach ($files as $file) {
-            $filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $path = $file->store('public');
-            $fileDataArray[] = [
-                'path' => $path,
-                'filename' => "$filename.$extension"
-            ];
+        foreach ($this->files as $attachment) {
+            try {
+                $path = $attachment->store('support-ticket-images', 'public');
+                $filename = $attachment->getClientOriginalName();
+                SupportAttachment::create([
+                    'support_id' => $support->id,
+                    'filename' => $filename,
+                    'path' => $path
+                ]);
+            } catch (\Exception $e) {
+                // Log the error or show an error message to the user
+                Log::error('Attachment upload failed: ' . $e->getMessage());
+                session()->flash('error', 'Attachment upload failed: ' . $e->getMessage());
+            }
         }
-
-        $fileDataJson = json_encode($fileDataArray);
-
-        Support::create([
-            'title' => $this->title,
-            'theme_id' => $this->theme_id,
-            'status_id' => 1,
-            'text' => $this->text,
-            'media' => $fileDataJson
-        ]);
 
         return to_route('support.table')->with('support_create_success', 'Обращение в поддержку успешно отправлено.');
     }
