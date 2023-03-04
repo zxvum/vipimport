@@ -59,7 +59,7 @@ class Create extends Component
             }
         }
 
-        return to_route('support.table')->with('support_create_success', 'Обращение в поддержку успешно отправлено.');
+        return to_route('support.table')->with('success', 'Обращение в поддержку успешно отправлено.');
     }
 
     public function mount(){

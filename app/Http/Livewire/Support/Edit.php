@@ -3,14 +3,31 @@
 namespace App\Http\Livewire\Support;
 
 use App\Models\Support;
+use App\Models\SupportTheme;
 use Livewire\Component;
 
 class Edit extends Component
 {
     public $support;
 
+    public $themes = [];
+
+    public $title = '';
+    public $theme_id = 1;
+    public $text = '';
+    public $files = [];
+    public $attachments = [];
+
+    public $selectedImage;
+
     public function mount($id){
         $this->support = Support::find($id);
+        $this->themes = SupportTheme::all();
+
+        $this->title = $this->support->title;
+        $this->theme_id = $this->support->theme_id;
+        $this->text = $this->support->text;
+        $this->attachments = $this->support->attachments;
     }
 
     protected $rules = [
@@ -28,34 +45,28 @@ class Edit extends Component
     public function update(){
         $this->validate();
 
-        $files = $this->files;
-        $fileDataArray = [];
+        $this->support->title = $this->title;
+        $this->support->theme_id = $this->theme_id;
+        $this->support->status_id = 1;
+        $this->support->text = $this->text;
+        $this->support->save();
 
-        foreach ($files as $file) {
-            $filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $path = $file->store('public');
-            $fileDataArray[] = [
-                'path' => $path,
-                'filename' => "$filename.$extension"
-            ];
-        }
+        return to_route('support.table')->with('success', 'Обращение ID: '.$this->support->id.' успешно обновлено.');
+    }
 
-        $fileDataJson = json_encode($fileDataArray);
+    public function openImageModal($image)
+    {
+        $this->selectedImage = $image;
+        $this->dispatchBrowserEvent('openImageModal');
+    }
 
-        Support::create([
-            'title' => $this->title,
-            'theme_id' => $this->theme_id,
-            'status_id' => 1,
-            'text' => $this->text,
-            'media' => $fileDataJson
-        ]);
-
-        return to_route('support.table')->with('support_create_success', 'Обращение в поддержку успешно отправлено.');
+    public function closeImageModal()
+    {
+        $this->dispatchBrowserEvent('closeImageModal');
     }
 
     public function render()
     {
-        return view('livewire.support.edit');
+        return view('livewire.support.edit')->extends('layouts.app');
     }
 }
