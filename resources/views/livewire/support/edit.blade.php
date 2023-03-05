@@ -17,6 +17,11 @@
 
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-lg-6">
+            @if(session()->has('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Редактирование обращения: {{ $support->id }}</h5>
@@ -60,16 +65,22 @@
                                 </h2>
                                 <div id="accordionTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
                                     <div class="accordion-body">
-                                        <div>
+                                        <div class="d-flex flex-column align-items-start">
                                             @foreach($attachments as $image)
                                                 <button wire:click.prevent="openImageModal('{{ $image->path }}')" class="link-primary btn p-0 m-0">Открыть ({{ $image->filename }})</button>
                                             @endforeach
+                                        </div>
+                                        <div class="mt-2">
+                                            <strong>!Важно: </strong> если вы загрузите новые файлы и обновите тикет, то ваши прошлые изображения будут автоматическки удалены.
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endif
-                        <button type="submit" class="btn btn-primary">Обновить</button>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">Обновить</button>
+                            <a href="{{ route('support.table') }}" class="btn btn-secondary">Назад</a>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\IfAddressesEmpty;
 use App\Http\Middleware\ifOrderEmpty;
+use App\Http\Middleware\LimitSupport;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -23,6 +24,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+//        LimitSupport::class,
     ];
 
     /**
@@ -67,6 +69,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         // custom
         'if-addresses-empty' => IfAddressesEmpty::class,
-        'if-ones-order-is-empty' => ifOrderEmpty::class
+        'if-ones-order-is-empty' => ifOrderEmpty::class,
+        'limit.support' => LimitSupport::class,
     ];
 }

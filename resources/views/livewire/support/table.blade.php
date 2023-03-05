@@ -6,9 +6,9 @@
             {{ session('success') }}
         </div>
     @endif
-    @if(session()->has('danger'))
-        <div class="alert alert-success">
-            {{ session('danger') }}
+    @if(session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
         </div>
     @endif
     <div class="col-12">

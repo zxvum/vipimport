@@ -3,11 +3,16 @@
 namespace App\Http\Livewire\Support;
 
 use App\Models\Support;
+use App\Models\SupportAttachment;
 use App\Models\SupportTheme;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Edit extends Component
 {
+    use WithFileUploads;
+
     public $support;
 
     public $themes = [];
@@ -47,9 +52,28 @@ class Edit extends Component
 
         $this->support->title = $this->title;
         $this->support->theme_id = $this->theme_id;
-        $this->support->status_id = 1;
+        $this->support->status_id = 2;
         $this->support->text = $this->text;
         $this->support->save();
+
+        if ($this->files){
+            $this->support->deleteAttachments();
+            foreach ($this->files as $attachment) {
+                try {
+                    $path = $attachment->store('support-ticket-images', 'public');
+                    $filename = $attachment->getClientOriginalName();
+                    SupportAttachment::create([
+                        'support_id' => $this->support->id,
+                        'filename' => $filename,
+                        'path' => $path
+                    ]);
+                } catch (\Exception $e) {
+                    // Log the error or show an error message to the user
+                    Log::error('Attachment upload failed: ' . $e->getMessage());
+                    return to_route('support.table')->with('error', 'Attachment upload failed: ' . $e->getMessage());
+                }
+            }
+        }
 
         return to_route('support.table')->with('success', 'Обращение ID: '.$this->support->id.' успешно обновлено.');
     }

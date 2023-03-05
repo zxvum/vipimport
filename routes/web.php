@@ -87,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => '/support', 'as' => 'support.'], function() {
         Route::get('/', \App\Http\Livewire\Support\Table::class)->name('table');
-        Route::get('/create', \App\Http\Livewire\Support\Create::class)->name('create');
+        Route::get('/create', \App\Http\Livewire\Support\Create::class)->name('create')->middleware('limit.support');
         Route::get('/{id}/edit', \App\Http\Livewire\Support\Edit::class)->name('edit');
         Route::get('/{id}/view', \App\Http\Livewire\Support\View::class)->name('view');
     });

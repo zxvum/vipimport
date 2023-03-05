@@ -5,7 +5,10 @@ namespace App\Http\Livewire\Support;
 use App\Models\Support;
 use App\Models\SupportAttachment;
 use App\Models\SupportTheme;
+use Carbon\Carbon;
+use Illuminate\Http\Client\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -59,7 +62,22 @@ class Create extends Component
             }
         }
 
+        $this->updateSupportLimit();
+
         return to_route('support.table')->with('success', 'Обращение в поддержку успешно отправлено.');
+    }
+
+    public function updateSupportLimit(){
+        // Get the current date and the user's IP address
+        $today = Carbon::now()->format('Ymd');
+        $ipAddress = \request()->ip();
+
+        // Check if the user has exceeded the daily limit
+        $cacheKey = "support_cases_{$ipAddress}_{$today}";
+        $supportCaseCount = Cache::get($cacheKey, 0);
+
+        // Increment the support case count and store it in cache
+        Cache::put($cacheKey, $supportCaseCount + 1, Carbon::tomorrow());
     }
 
     public function mount(){

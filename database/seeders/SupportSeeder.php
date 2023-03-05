@@ -23,6 +23,7 @@ class SupportSeeder extends Seeder
         SupportTheme::create(['name' => 'Другое']);
 
         SupportStatus::create(['name' => 'Создан', 'color_name' => 'warning']);
+        SupportStatus::create(['name' => 'Изменен', 'color_name' => 'warning']);
         SupportStatus::create(['name' => 'В процессе', 'color_name' => 'primary']);
         SupportStatus::create(['name' => 'Решён', 'color_name' => 'success']);
         SupportStatus::create(['name' => 'Закрыт', 'color_name' => 'danger']);

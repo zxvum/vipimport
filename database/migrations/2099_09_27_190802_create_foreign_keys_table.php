@@ -61,7 +61,7 @@ return new class extends Migration
         });
 
         Schema::table('support_attachments', function (Blueprint $table) {
-            $table->foreign('support_id')->references('id')->on('supports');
+            $table->foreign('support_id')->references('id')->on('supports')->onDelete('cascade');
         });
     }
 

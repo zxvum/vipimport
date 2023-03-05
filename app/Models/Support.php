@@ -27,4 +27,8 @@ class Support extends Model
     public function attachments(){
         return $this->hasMany(SupportAttachment::class, 'support_id', 'id');
     }
+
+    public function deleteAttachments(){
+        return $this->attachments()->delete();
+    }
 }

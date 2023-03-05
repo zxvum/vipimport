@@ -65,23 +65,23 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        UserDocument::create([
-            'user_id' => $user->id,
-            'name' => 'Скан паспорта',
-            'status_id' => 1,
-        ]);
-
-        UserDocument::create([
-            'user_id' => $user->id,
-            'name' => 'Скан договора',
-            'status_id' => 1,
-        ]);
-
-        UserDocument::create([
-            'user_id' => $user->id,
-            'name' => 'Скан форма 1583',
-            'status_id' => 1,
-        ]);
+//        UserDocument::create([
+//            'user_id' => $user->id,
+//            'name' => 'Скан паспорта',
+//            'status_id' => 1,
+//        ]);
+//
+//        UserDocument::create([
+//            'user_id' => $user->id,
+//            'name' => 'Скан договора',
+//            'status_id' => 1,
+//        ]);
+//
+//        UserDocument::create([
+//            'user_id' => $user->id,
+//            'name' => 'Скан форма 1583',
+//            'status_id' => 1,
+//        ]);
 
         return redirect(RouteServiceProvider::HOME);
     }

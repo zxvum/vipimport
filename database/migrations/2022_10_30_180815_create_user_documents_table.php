@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('user_documents', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('document_id');
-            $table->string('document_path');
+            $table->unsignedBigInteger('document_id')->nullable();
+            $table->string('document_path')->nullable();
             $table->unsignedBigInteger('status_id');
             $table->timestamps();
         });
